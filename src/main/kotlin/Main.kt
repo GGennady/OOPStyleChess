@@ -1,5 +1,10 @@
 package org.example
 
 fun main() {
-    println("Hello World!")
+    var board = Board()
+    board.setupDefaultPiecePositions()
+
+    var renderer = BoardConsoleRenderer()
+    renderer.render(board)
+    val a: Int = 123
 }
