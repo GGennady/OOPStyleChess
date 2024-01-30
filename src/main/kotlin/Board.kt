@@ -17,4 +17,7 @@ class Board {
             setPiece(Coordinates(file, 7), Pawn(Color.BLACK, Coordinates(file, 7)))
         }
     }
+    fun isSquareDark(coordinates: Coordinates): Boolean {
+        return ((((coordinates.file.ordinal + 1) + coordinates.rank)% 2) == 0)
+    }
 }
