@@ -1,5 +1,7 @@
 package org.example
 
+import org.example.Pieces.Piece
+
 class BoardConsoleRenderer {
 
     val ANSI_RESET: String = "\u001B[0m"
@@ -13,7 +15,10 @@ class BoardConsoleRenderer {
             var line: String = ""
             for(file in File.entries) {
                 //println(file.toString() + rank.toString())
-                line += getSpriteForEmptySquare(coordinates = Coordinates(file, rank))
+                val coordinates = Coordinates(file, rank)
+                if (board.isSquareEmpty(coordinates)) {
+                    line += getSpriteForEmptySquare(coordinates)
+                } else line += getPieceSprite(board.getPiece(coordinates)!!)
             }
             line += ANSI_RESET
             println(line)
@@ -31,13 +36,29 @@ class BoardConsoleRenderer {
         } else result = ANSI_BLACK_PIECE_COLOR + result
 
         if(isSquareDark) {
-            result = ANSI_WHITE_SQUARE_BACKGROUND + result
-        } else result = ANSI_BLACK_SQUARE_BACKGROUND + result
+            result = ANSI_BLACK_SQUARE_BACKGROUND + result
+        } else result = ANSI_WHITE_SQUARE_BACKGROUND + result
 
         return result
     }
 
     private fun getSpriteForEmptySquare(coordinates: Coordinates): String {
         return colorizeSprite("   ", Color.WHITE, Board().isSquareDark(coordinates))
+    }
+
+    private fun selectUnicodeSpriteForPiece(piece: Piece): String {
+        when(piece::class.simpleName) {
+            "Pawn" -> return "♟"
+            "Knight" -> return "♞"
+            "Bishop" -> return "♝"
+            "Rook" -> return "♜"
+            "Queen" -> return "♛"
+            "King" -> return "♚"
+        }
+        return ""
+    }
+
+    private fun getPieceSprite(piece: Piece): String {
+        return colorizeSprite(" " + selectUnicodeSpriteForPiece(piece) + " ", piece.color, Board().isSquareDark(piece.coordinates))
     }
 }
