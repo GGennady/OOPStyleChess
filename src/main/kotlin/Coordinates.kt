@@ -15,8 +15,8 @@ class Coordinates (val file: File, val rank: Int) {
         val f: Int = file.ordinal + shift.fileShift
         val r: Int = rank + shift.rankShift
 
-        if ((f < 0) || (f > 8)) return false
-        if ((r < 0) || (r > 8)) return false
+        if ((f < 0) || (f > 7)) return false
+        if ((r < 1) || (r > 8)) return false
 
         return true
     }

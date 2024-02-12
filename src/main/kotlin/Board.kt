@@ -10,6 +10,16 @@ class Board {
         pieces[coordinates] = piece
     }
 
+    fun removePiece(coordinates: Coordinates) {
+        pieces.remove(coordinates)
+    }
+
+    fun movePiece(from: Coordinates, to: Coordinates) {
+        val piece = getPiece(from)
+        removePiece(from)
+        setPiece(to, piece!!)
+    }
+
     fun isSquareEmpty(coordinates: Coordinates): Boolean {
         return !pieces.containsKey(coordinates)
     }
